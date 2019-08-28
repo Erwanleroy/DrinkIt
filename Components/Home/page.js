@@ -2,22 +2,22 @@ import React from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 
 class App extends React.Component {
-    
+
     navigate = (e) => {
         this.props.navigation.navigate(e)
     }
 
-    render(){
+    render() {
         return (
             <View>
                 <Button
-                    onPress={()=>{this.navigate("palmier")}}
-                    title="Palmier"
-                    />
+                    onPress={() => { this.navigate("palmier") }}
+                    title="Palmier (3-10 Joueurs)"
+                />
                 <Button
-                    onPress={()=>{this.navigate("rougeOuNoir")}}
+                    onPress={() => { this.navigate("rougeOuNoir") }}
                     title="Rouge Ou Noir"
-                    />
+                />
             </View>
         )
     }
