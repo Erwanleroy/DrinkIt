@@ -11,7 +11,7 @@ class App extends React.Component {
         return (
             <View>
                 <Button
-                    onPress={() => { this.navigate("palmier") }}
+                    onPress={() => { this.navigate("signPalmier") }}
                     title="Palmier (3-10 Joueurs)"
                 />
                 <Button

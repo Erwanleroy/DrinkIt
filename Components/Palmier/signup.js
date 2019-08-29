@@ -1,5 +1,10 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import {
+    StyleSheet,
+    Text,
+    View,
+    BackHandler,
+} from 'react-native';
 import { Input } from 'react-native-elements';
 import { Button } from 'react-native-elements';
 import { Icon } from 'react-native-elements'
@@ -22,6 +27,13 @@ class App extends React.Component {
     navigate = (e) => {
         this.props.navigation.navigate(e)
     }
+
+
+    //deny the back button
+    componentDidMount = () => BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
+    componentWillUnmount = () => BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton)
+    handleBackButton = () => true
+
 
     randomInt = (e) => Math.floor(Math.random() * Math.floor(e));
 
@@ -56,13 +68,17 @@ class App extends React.Component {
         }
     }
 
+    launchGame = () => {
+        this.props.navigation.navigate("palmier", { playerName: this.state.players, colors: this.state.colorAlreadyUsed })
+    }
+
     render() {
         return (
             <View>
                 <Button
                     title="Launch Game ?!"
                     disabled={!this.state.canLaunch}
-                    onPress={this.addNewPlayer}
+                    onPress={this.launchGame}
                 />
                 <Input
                     value={this.state.newPlayer}
@@ -76,11 +92,12 @@ class App extends React.Component {
                     />}
                     onPress={this.addNewPlayer}
                 />
-
-                <View>
-                    <Text style={{ fontSize: 20 }}>Players</Text>
-                    <Text style={{ position: "absolute", right: 0, fontSize: 20 }}>Colors</Text>
-                </View>
+                {this.state.players.length > 0 ? (
+                    <View>
+                        <Text style={{ fontSize: 20 }}>Players</Text>
+                        <Text style={{ position: "absolute", right: 0, fontSize: 20 }}>Colors</Text>
+                    </View>
+                ) : null}
                 {this.state.players ?
                     this.state.players.map((value, index) => {
                         return (
@@ -100,7 +117,6 @@ class App extends React.Component {
                                 }
                                 onLongPress={() => { this.removePlayer(index) }}
                             />
-                            // this.state.colorAlreadyUsed[index]
                         )
                     })
                     : null}
